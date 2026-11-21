@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, CheckSquare, Calendar, FileText, Sparkles } from 'lucide-react';
+import { X, CheckSquare, Calendar, FileText } from 'lucide-react';
 import { api } from '../lib/api';
 
 export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab = 'task' }) {
@@ -9,10 +9,8 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Today's ISO date string
   const todayStr = new Date().toISOString().split('T')[0];
 
-  // Task form state
   const [taskForm, setTaskForm] = useState({
     title: '',
     description: '',
@@ -21,7 +19,6 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
     courseCode: 'CSE 324',
   });
 
-  // Event form state
   const [eventForm, setEventForm] = useState({
     title: '',
     description: '',
@@ -32,7 +29,6 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
     location: '',
   });
 
-  // Note form state
   const [noteForm, setNoteForm] = useState({
     title: '',
     content: '',
@@ -81,15 +77,6 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
       await api.createEvent(eventForm);
       onCreated('event');
       onClose();
-      setEventForm({
-        title: '',
-        description: '',
-        date: todayStr,
-        startTime: '10:00',
-        endTime: '11:30',
-        category: 'Lecture',
-        location: '',
-      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -109,13 +96,6 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
       await api.createNote(noteForm);
       onCreated('note');
       onClose();
-      setNoteForm({
-        title: '',
-        content: '',
-        tags: '',
-        isPinned: false,
-        color: 'default',
-      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -124,188 +104,177 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-        {/* Header with Tabs */}
-        <div className="px-6 pt-5 pb-3 border-b border-slate-100 dark:border-slate-800">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-indigo-500" /> Quick Add to ZenSpace
-            </h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-surface-light dark:bg-surface-dark rounded-xl w-full max-w-lg shadow-xl border border-hairline-light dark:border-hairline-dark overflow-hidden">
+        {/* Header with Segmented Tabs */}
+        <div className="px-5 pt-4 pb-3 border-b border-hairline-light dark:border-hairline-dark">
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink-primary-light dark:text-ink-primary-dark">
+              Quick Capture // ZenSpace
+            </span>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-1 rounded text-ink-muted-light dark:text-ink-muted-dark hover:text-ink-primary-light dark:hover:text-ink-primary-dark"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 bg-slate-100 dark:bg-slate-800/60 p-1 rounded-xl">
+          <div className="grid grid-cols-3 gap-1 bg-surface-subtle-light dark:bg-surface-subtle-dark p-1 rounded-md font-mono text-xs">
             <button
               type="button"
               onClick={() => { setActiveTab('task'); setError(''); }}
-              className={`flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`py-1 rounded font-medium transition ${
                 activeTab === 'task'
-                  ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
               }`}
             >
-              <CheckSquare className="w-3.5 h-3.5" /> Task
+              [Task]
             </button>
             <button
               type="button"
               onClick={() => { setActiveTab('event'); setError(''); }}
-              className={`flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`py-1 rounded font-medium transition ${
                 activeTab === 'event'
-                  ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
               }`}
             >
-              <Calendar className="w-3.5 h-3.5" /> Event
+              [Event]
             </button>
             <button
               type="button"
               onClick={() => { setActiveTab('note'); setError(''); }}
-              className={`flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`py-1 rounded font-medium transition ${
                 activeTab === 'note'
-                  ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
               }`}
             >
-              <FileText className="w-3.5 h-3.5" /> Note
+              [Note]
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="mx-6 mt-4 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs">
+          <div className="mx-5 mt-3 p-2.5 rounded bg-vermilion-bg dark:bg-vermilion-bg-dark border border-vermilion/30 text-vermilion dark:text-vermilion-dark text-xs font-mono">
             {error}
           </div>
         )}
 
-        {/* Tab 1: Task Form */}
+        {/* Task Form */}
         {activeTab === 'task' && (
-          <form onSubmit={handleTaskSubmit} className="p-6 space-y-4">
+          <form onSubmit={handleTaskSubmit} className="p-5 space-y-3">
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Task Title *
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                Title *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g., Submit CSE 324 Lab Report 04"
+                placeholder="e.g. Submit CSE 324 Lab Report 04"
                 value={taskForm.title}
                 onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-ink-primary-light outline-none transition"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Target Due Date *
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                  Due Date *
                 </label>
                 <input
                   type="date"
                   required
                   value={taskForm.dueDate}
                   onChange={(e) => setTaskForm({ ...taskForm, dueDate: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Priority Level *
                 </label>
                 <select
                   value={taskForm.priority}
                   onChange={(e) => setTaskForm({ ...taskForm, priority: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 >
-                  <option value="High">🔴 High Priority</option>
-                  <option value="Medium">🟡 Medium Priority</option>
-                  <option value="Low">🟢 Low Priority</option>
+                  <option value="High">HIGH [CRITICAL]</option>
+                  <option value="Medium">MEDIUM [STANDARD]</option>
+                  <option value="Low">LOW [BACKLOG]</option>
                 </select>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Course Code / Tag
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g., CSE 324"
-                  value={taskForm.courseCode}
-                  onChange={(e) => setTaskForm({ ...taskForm, courseCode: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Calendar Sync
-                </label>
-                <div className="flex items-center h-9 px-3 text-xs text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 rounded-lg border border-indigo-200/50 dark:border-indigo-800/50">
-                  ✓ Automatically synced to calendar
-                </div>
-              </div>
+            <div>
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                Course Code
+              </label>
+              <input
+                type="text"
+                placeholder="CSE 324"
+                value={taskForm.courseCode}
+                onChange={(e) => setTaskForm({ ...taskForm, courseCode: e.target.value })}
+                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+              />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Description (Optional)
               </label>
               <textarea
                 rows={2}
-                placeholder="Key requirements, rubric checklist, or links..."
+                placeholder="Key requirements or links..."
                 value={taskForm.description}
                 onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
               />
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
               >
-                {loading ? 'Adding Task...' : 'Save & Sync to Calendar'}
+                {loading ? 'Committing...' : 'Commit to Schedule'}
               </button>
             </div>
           </form>
         )}
 
-        {/* Tab 2: Event Form */}
+        {/* Event Form */}
         {activeTab === 'event' && (
-          <form onSubmit={handleEventSubmit} className="p-6 space-y-4">
+          <form onSubmit={handleEventSubmit} className="p-5 space-y-3">
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Event Title *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g., CSE 324 Web Technologies Sessional Lab"
+                placeholder="e.g. CSE 324 Web Tech Sessional Lab"
                 value={eventForm.title}
                 onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Date *
                 </label>
                 <input
@@ -313,178 +282,143 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                   required
                   value={eventForm.date}
                   onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  Academic Category *
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                  Category *
                 </label>
                 <select
                   value={eventForm.category}
                   onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 >
-                  <option value="Lecture">📘 Lecture</option>
-                  <option value="Lab">🔬 Laboratory Sessional</option>
-                  <option value="Exam">📝 Examination</option>
-                  <option value="Assignment">📁 Assignment / Demo</option>
-                  <option value="Personal">☕ Personal / Wellbeing</option>
+                  <option value="Lecture">Lecture</option>
+                  <option value="Lab">Lab Sessional</option>
+                  <option value="Exam">Exam / Midterm</option>
+                  <option value="Assignment">Assignment Demo</option>
+                  <option value="Personal">Personal</option>
                 </select>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Start Time
                 </label>
                 <input
                   type="time"
                   value={eventForm.startTime}
                   onChange={(e) => setEventForm({ ...eventForm, startTime: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   End Time
                 </label>
                 <input
                   type="time"
                   value={eventForm.endTime}
                   onChange={(e) => setEventForm({ ...eventForm, endTime: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Location / Room
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                Room / Venue
               </label>
               <input
                 type="text"
-                placeholder="e.g., Lab Room 302, Academic Building"
+                placeholder="Lab Room 302, Academic Building"
                 value={eventForm.location}
                 onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
               >
-                {loading ? 'Creating...' : 'Schedule Event'}
+                {loading ? 'Scheduling...' : 'Schedule Event'}
               </button>
             </div>
           </form>
         )}
 
-        {/* Tab 3: Note Form */}
+        {/* Note Form */}
         {activeTab === 'note' && (
-          <form onSubmit={handleNoteSubmit} className="p-6 space-y-4">
+          <form onSubmit={handleNoteSubmit} className="p-5 space-y-3">
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Note Title *
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g., RESTful API Status Codes Cheatsheet"
+                placeholder="e.g. Normalization Rules Cheatsheet"
                 value={noteForm.title}
                 onChange={(e) => setNoteForm({ ...noteForm, title: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Tags (comma separated)
               </label>
               <input
                 type="text"
-                placeholder="CSE324, WebTech, Sessional"
+                placeholder="CSE324, WebTech"
                 value={noteForm.tags}
                 onChange={(e) => setNoteForm({ ...noteForm, tags: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Content (Markdown supported)
               </label>
               <textarea
                 rows={4}
-                placeholder="Write your study notes, formulas, or markdown list here..."
+                placeholder="Write notes, formulas, or code snippets..."
                 value={noteForm.content}
                 onChange={(e) => setNoteForm({ ...noteForm, content: e.target.value })}
-                className="w-full px-3 py-2 text-sm font-mono rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700 dark:text-slate-300">
-                <input
-                  type="checkbox"
-                  checked={noteForm.isPinned}
-                  onChange={(e) => setNoteForm({ ...noteForm, isPinned: e.target.checked })}
-                  className="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4"
-                />
-                Pin note to top of list
-              </label>
-
-              <div className="flex items-center gap-1.5">
-                {['default', 'indigo', 'emerald', 'amber', 'rose'].map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setNoteForm({ ...noteForm, color: c })}
-                    className={`w-5 h-5 rounded-full border ${
-                      noteForm.color === c ? 'ring-2 ring-indigo-500 scale-110' : 'opacity-70'
-                    } ${
-                      c === 'indigo'
-                        ? 'bg-indigo-400 border-indigo-500'
-                        : c === 'emerald'
-                        ? 'bg-emerald-400 border-emerald-500'
-                        : c === 'amber'
-                        ? 'bg-amber-400 border-amber-500'
-                        : c === 'rose'
-                        ? 'bg-rose-400 border-rose-500'
-                        : 'bg-slate-300 border-slate-400'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
               >
-                {loading ? 'Saving...' : 'Create Note'}
+                {loading ? 'Saving...' : 'Save Note'}
               </button>
             </div>
           </form>

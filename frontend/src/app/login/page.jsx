@@ -6,21 +6,18 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import {
-  GraduationCap,
-  Sparkles,
   ArrowRight,
   Lock,
   Mail,
   Sun,
   Moon,
   AlertCircle,
-  ShieldCheck,
   Zap,
 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, loginDemo, loading } = useAuth();
+  const { login, loginDemo } = useAuth();
   const { isDark, toggleTheme } = useTheme();
 
   const [email, setEmail] = useState('');
@@ -64,128 +61,115 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors">
-      {/* Top Header */}
-      <header className="px-6 py-4 flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/60">
+    <div className="min-h-screen flex flex-col justify-between bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark transition-colors">
+      <header className="px-6 py-4 flex items-center justify-between border-b border-hairline-light dark:border-hairline-dark">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-            <span className="font-bold text-base font-mono">Z</span>
-          </div>
-          <span className="font-bold text-lg tracking-tight">ZenSpace</span>
+          <span className="w-6 h-6 rounded bg-ink-primary-light dark:bg-ink-primary-dark text-canvas-light dark:text-canvas-dark flex items-center justify-center font-mono font-bold text-xs">
+            Z
+          </span>
+          <span className="font-bold text-sm tracking-tight">ZenSpace</span>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-          >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
-          </button>
-        </div>
+        <button
+          onClick={toggleTheme}
+          className="p-1.5 rounded-md text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark transition"
+        >
+          {isDark ? <Sun className="w-3.5 h-3.5 text-ochre-dark" /> : <Moon className="w-3.5 h-3.5" />}
+        </button>
       </header>
 
-      {/* Main Login Box */}
       <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          {/* Academic Badge */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-xs font-semibold border border-indigo-200/60 dark:border-indigo-800/60 mb-3">
-              <GraduationCap className="w-4 h-4" /> BAIUST • CSE 324 Sessional
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Welcome to ZenSpace
+        <div className="w-full max-w-sm">
+          <div className="text-center mb-6">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink-muted-light dark:text-ink-muted-dark block mb-1">
+              CSE 324 // Sessional Platform
+            </span>
+            <h1 className="text-xl font-bold tracking-tight text-ink-primary-light dark:text-ink-primary-dark">
+              ZenSpace Workstation
             </h1>
-            <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              Unified Minimalist Academic Productivity Platform
-            </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900/90 rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-sm">
-            {/* 1-Click Demo Login Button */}
-            <div className="mb-6">
+          <div className="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-hairline-light dark:border-hairline-dark shadow-tactile space-y-4">
+            {/* 1-Click Fast Student Demo Access */}
+            <div>
               <button
                 type="button"
                 onClick={handleDemoLogin}
                 disabled={submitting}
-                className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium text-sm shadow-md shadow-indigo-500/25 transition active:scale-[0.98] disabled:opacity-60"
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-md bg-ink-primary-light hover:bg-black dark:bg-ink-primary-dark dark:hover:bg-white text-canvas-light dark:text-canvas-dark font-mono text-xs font-semibold shadow-tactile transition active:scale-[0.98] disabled:opacity-60"
               >
-                <Zap className="w-4 h-4 text-amber-300" />
-                <span>1-Click Login as Demo Student</span>
+                <Zap className="w-3.5 h-3.5 text-ochre-dark" />
+                <span>1-Click Demo Login (Nesar Uddin)</span>
               </button>
-              <p className="text-[11px] text-center text-slate-400 dark:text-slate-500 mt-2">
-                Logs in as <strong className="text-slate-600 dark:text-slate-300">Nesar Uddin Ifag</strong> (ID: 1119004) with pre-seeded academic data.
+              <p className="font-mono text-[10px] text-center text-ink-muted-light dark:text-ink-muted-dark mt-1.5">
+                BAIUST CSE • ID: 1119004 • Pre-seeded dataset
               </p>
             </div>
 
-            <div className="relative flex items-center justify-center my-6">
-              <div className="border-t border-slate-200 dark:border-slate-800 w-full" />
-              <span className="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400">or sign in with credentials</span>
+            <div className="relative flex items-center justify-center my-3">
+              <div className="border-t border-hairline-light dark:border-hairline-dark w-full" />
+              <span className="bg-surface-light dark:bg-surface-dark px-2 font-mono text-[10px] text-ink-muted-light dark:text-ink-muted-dark">
+                OR
+              </span>
             </div>
 
             {error && (
-              <div className="mb-4 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
+              <div className="p-2.5 rounded bg-vermilion-bg dark:bg-vermilion-bg-dark border border-vermilion/30 text-vermilion dark:text-vermilion-dark text-xs flex items-center gap-1.5">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-                  Academic Email Address
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                  Academic Email
                 </label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
-                  <input
-                    type="email"
-                    required
-                    placeholder="student@baiust.edu.bd"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition"
-                  />
-                </div>
+                <input
+                  type="email"
+                  required
+                  placeholder="student@baiust.edu.bd"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-ink-primary-light outline-none transition font-sans"
+                />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Password
                 </label>
-                <div className="relative">
-                  <Lock className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
-                  <input
-                    type="password"
-                    required
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition"
-                  />
-                </div>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-ink-primary-light outline-none transition font-sans"
+                />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-medium text-sm transition active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full py-2 px-3 rounded-md border border-hairline-strong-light dark:border-hairline-strong-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark text-ink-primary-light dark:text-ink-primary-dark font-mono text-xs font-semibold transition active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-1.5"
               >
-                <span>{submitting ? 'Authenticating...' : 'Sign In'}</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{submitting ? 'Verifying...' : 'Sign In'}</span>
+                <ArrowRight className="w-3 h-3" />
               </button>
             </form>
 
-            <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
-              Don't have an account yet?{' '}
-              <Link href="/register" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
-                Create Account
+            <div className="pt-2 text-center text-[11px] text-ink-muted-light dark:text-ink-muted-dark">
+              Need an account?{' '}
+              <Link href="/register" className="font-semibold text-ink-primary-light dark:text-ink-primary-dark hover:underline">
+                Register
               </Link>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Footer Info */}
-      <footer className="py-4 text-center text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200/50 dark:border-slate-800/50">
-        CSE 324 Web Technologies Sessional • Supervisor: Yeakob Ali • Student: Nesar Uddin Ifag (1119004)
+      <footer className="py-3 text-center font-mono text-[10px] text-ink-muted-light dark:text-ink-muted-dark border-t border-hairline-light dark:border-hairline-dark">
+        BAIUST CSE 324 • Supervisor: Yeakob Ali • Student: Nesar Uddin Ifag (1119004)
       </footer>
     </div>
   );

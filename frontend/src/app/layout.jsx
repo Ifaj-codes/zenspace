@@ -3,8 +3,8 @@ import { ThemeProvider } from '../context/ThemeContext';
 import { AuthProvider } from '../context/AuthContext';
 
 export const metadata = {
-  title: 'ZenSpace - Unified Minimalist Productivity Platform',
-  description: 'Connected academic calendar, prioritized task management, and personal notes in one clutter-free dashboard.',
+  title: 'ZenSpace — Academic Productivity System',
+  description: 'Clutter-free personal academic workstation uniting timetable, prioritized tasks, and study notebooks.',
 };
 
 export default function RootLayout({ children }) {
@@ -14,11 +14,11 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 min-h-screen antialiased transition-colors duration-200">
+      <body className="bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark min-h-screen antialiased transition-colors duration-150">
         <ThemeProvider>
           <AuthProvider>
             {children}

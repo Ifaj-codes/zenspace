@@ -9,36 +9,83 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        zen: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+        canvas: {
+          light: '#fbfaf8',
+          dark: '#0c0d10',
         },
-        accent: {
-          blue: '#3b82f6',
-          indigo: '#6366f1',
-          emerald: '#10b981',
-          rose: '#f43f5e',
-          amber: '#f59e0b',
+        surface: {
+          light: '#ffffff',
+          'subtle-light': '#f3f2ee',
+          dark: '#131519',
+          'subtle-dark': '#191b22',
+        },
+        hairline: {
+          light: '#e6e4dc',
+          'strong-light': '#d2cfc4',
+          dark: '#23262d',
+          'strong-dark': '#323640',
+        },
+        ink: {
+          primary: {
+            light: '#111215',
+            dark: '#f3f4f6',
+          },
+          secondary: {
+            light: '#616571',
+            dark: '#8b8f9a',
+          },
+          muted: {
+            light: '#9da0ab',
+            dark: '#585c67',
+          },
+        },
+        vermilion: {
+          DEFAULT: '#e5484d',
+          dark: '#ff6369',
+          bg: '#fdf2f2',
+          'bg-dark': '#291415',
+        },
+        cobalt: {
+          DEFAULT: '#2563eb',
+          dark: '#60a5fa',
+          bg: '#eff6ff',
+          'bg-dark': '#111e38',
+        },
+        pine: {
+          DEFAULT: '#059669',
+          dark: '#34d399',
+          bg: '#ecfdf5',
+          'bg-dark': '#0d281e',
+        },
+        ochre: {
+          DEFAULT: '#d97706',
+          dark: '#fbbf24',
+          bg: '#fffbeb',
+          'bg-dark': '#2b1f09',
         },
       },
       fontFamily: {
         sans: [
-          'Inter',
+          'Plus Jakarta Sans',
           '-apple-system',
           'BlinkMacSystemFont',
           'Segoe UI',
           'Roboto',
           'sans-serif',
         ],
+        mono: [
+          'JetBrains Mono',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          'monospace',
+        ],
+      },
+      boxShadow: {
+        tactile: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'tactile-hover': '0 2px 5px -1px rgba(0, 0, 0, 0.08), 0 1px 3px -1px rgba(0, 0, 0, 0.06)',
       },
     },
   },
