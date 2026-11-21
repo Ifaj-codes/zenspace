@@ -53,7 +53,7 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
   };
 
   const handleDelete = async () => {
-    if (!confirm('Delete this event?')) return;
+    if (!confirm('Are you sure you want to delete this event?')) return;
     setLoading(true);
     try {
       await api.deleteEvent(event._id);
@@ -67,30 +67,30 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-surface-light dark:bg-surface-dark rounded-xl w-full max-w-md shadow-xl border border-hairline-light dark:border-hairline-dark overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-hairline-light dark:border-hairline-dark flex items-center justify-between">
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink-primary-light dark:text-ink-primary-dark">
-            Event Inspector // {event.category}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-150">
+      <div className="bg-surface-light dark:bg-surface-dark rounded-xl w-full max-w-md shadow-lg border border-border-subtle-light dark:border-border-subtle-dark overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-border-subtle-light dark:border-border-subtle-dark flex items-center justify-between">
+          <span className="font-serif font-medium text-sm text-ink-primary-light dark:text-ink-primary-dark">
+            Event Details · <span className="font-mono text-xs text-brand dark:text-brand-dark">{event.category}</span>
           </span>
           <button
             onClick={onClose}
-            className="p-1 rounded text-ink-muted-light dark:text-ink-muted-dark hover:text-ink-primary-light dark:hover:text-ink-primary-dark"
+            className="p-1 rounded-md text-ink-muted-light dark:text-ink-muted-dark hover:text-ink-primary-light dark:hover:text-ink-primary-dark transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {error && (
-          <div className="mx-5 mt-3 p-2.5 rounded bg-vermilion-bg dark:bg-vermilion-bg-dark border border-vermilion/30 text-vermilion dark:text-vermilion-dark text-xs font-mono flex items-center gap-1.5">
+          <div className="mx-5 mt-3 p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-1.5">
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="p-5 space-y-3">
+        <form onSubmit={handleSubmit} className="p-5 space-y-3.5">
           <div>
-            <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+            <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
               Title *
             </label>
             <input
@@ -98,13 +98,13 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
               required
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-ink-primary-light outline-none"
+              className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-brand dark:focus:border-brand-dark outline-none transition"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Date *
               </label>
               <input
@@ -112,18 +112,18 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
                 required
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Category
               </label>
               <select
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none font-medium"
               >
                 <option value="Lecture">Lecture</option>
                 <option value="Lab">Lab Sessional</option>
@@ -136,48 +136,49 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Start Time
               </label>
               <input
                 type="time"
                 value={form.startTime}
                 onChange={(e) => setForm({ ...form, startTime: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 End Time
               </label>
               <input
                 type="time"
                 value={form.endTime}
                 onChange={(e) => setForm({ ...form, endTime: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
-              Venue / Location
+            <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              Venue / Room
             </label>
             <input
               type="text"
+              placeholder="e.g. Room 302, Academic Building"
               value={form.location}
               onChange={(e) => setForm({ ...form, location: e.target.value })}
-              className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+              className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
             />
           </div>
 
-          <div className="pt-2 flex items-center justify-between border-t border-hairline-light dark:border-hairline-dark">
+          <div className="pt-2 flex items-center justify-between border-t border-border-subtle-light dark:border-border-subtle-dark">
             <button
               type="button"
               onClick={handleDelete}
               disabled={loading}
-              className="px-2.5 py-1.5 text-xs font-mono text-vermilion hover:bg-vermilion-bg dark:hover:bg-vermilion-bg-dark rounded flex items-center gap-1 transition disabled:opacity-50"
+              className="px-2.5 py-1.5 text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-md flex items-center gap-1 transition disabled:opacity-50"
             >
               <Trash2 className="w-3.5 h-3.5" /> Delete
             </button>
@@ -186,14 +187,14 @@ export default function EventModal({ isOpen, onClose, event, onUpdated, onDelete
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
+                className="px-3 py-1.5 text-xs text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-muted-light dark:hover:bg-surface-muted-dark rounded-md transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-medium rounded-lg bg-brand hover:bg-brand-light dark:bg-brand-dark dark:hover:bg-brand-dark/90 text-white dark:text-ink-primary-light shadow-xs transition active:scale-95 disabled:opacity-50"
               >
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>

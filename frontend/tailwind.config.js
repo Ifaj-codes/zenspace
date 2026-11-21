@@ -10,49 +10,66 @@ module.exports = {
     extend: {
       colors: {
         canvas: {
-          light: '#fbfbfb',
-          dark: '#0c0d0f',
+          light: '#f5f7f4',
+          dark: '#0c100e',
         },
         surface: {
           light: '#ffffff',
-          dark: '#14161a',
+          dark: '#131916',
           muted: {
-            light: '#f4f5f7',
-            dark: '#1a1d23',
+            light: '#ecf1eb',
+            dark: '#18211c',
           },
         },
         border: {
           subtle: {
-            light: '#eaebed',
-            dark: '#22252c',
+            light: '#e1e7e0',
+            dark: '#1f2823',
           },
           strong: {
-            light: '#d2d5dc',
-            dark: '#30343f',
+            light: '#c8d3c6',
+            dark: '#2c3931',
           },
         },
         ink: {
           primary: {
-            light: '#131518',
-            dark: '#f1f2f4',
+            light: '#131915',
+            dark: '#eef3ef',
           },
           secondary: {
-            light: '#5e636e',
-            dark: '#8b909d',
+            light: '#47564d',
+            dark: '#93a398',
           },
           muted: {
-            light: '#9da2af',
-            dark: '#585c67',
+            light: '#7e9085',
+            dark: '#586b60',
           },
         },
+        matcha: {
+          50: '#f3f7f4',
+          100: '#e3eee5',
+          200: '#c6ddcc',
+          300: '#9ec4a7',
+          400: '#6ea67c',
+          500: '#488858',
+          600: '#346c43',
+          700: '#295435',
+          800: '#23442c',
+          900: '#1e3825',
+          DEFAULT: '#295435',
+          dark: '#52a472',
+        },
         brand: {
-          DEFAULT: '#2563eb',
-          dark: '#3b82f6',
+          DEFAULT: '#295435',
+          dark: '#52a472',
+          light: '#346c43',
+          tint: '#eaf2ec',
+          tintDark: '#16281e',
         },
         priority: {
-          high: '#e11d48',
-          medium: '#d97706',
-          low: '#10b981',
+          high: '#b91c1c',
+          medium: '#b45309',
+          low: '#295435',
         },
       },
       fontFamily: {

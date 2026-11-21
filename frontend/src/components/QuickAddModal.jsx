@@ -77,6 +77,15 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
       await api.createEvent(eventForm);
       onCreated('event');
       onClose();
+      setEventForm({
+        title: '',
+        description: '',
+        date: todayStr,
+        startTime: '10:00',
+        endTime: '11:30',
+        category: 'Lecture',
+        location: '',
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -93,9 +102,24 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
     }
     setLoading(true);
     try {
-      await api.createNote(noteForm);
+      const tagsArray = noteForm.tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      await api.createNote({
+        ...noteForm,
+        tags: tagsArray,
+      });
       onCreated('note');
       onClose();
+      setNoteForm({
+        title: '',
+        content: '',
+        tags: 'CSE324, Sessional',
+        isPinned: false,
+        color: 'default',
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -104,71 +128,71 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-surface-light dark:bg-surface-dark rounded-xl w-full max-w-lg shadow-xl border border-hairline-light dark:border-hairline-dark overflow-hidden">
-        {/* Header with Segmented Tabs */}
-        <div className="px-5 pt-4 pb-3 border-b border-hairline-light dark:border-hairline-dark">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-150">
+      <div className="bg-surface-light dark:bg-surface-dark rounded-xl w-full max-w-lg shadow-lg border border-border-subtle-light dark:border-border-subtle-dark overflow-hidden">
+        {/* Header Tabs */}
+        <div className="px-5 pt-4 pb-3 border-b border-border-subtle-light dark:border-border-subtle-dark">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink-primary-light dark:text-ink-primary-dark">
-              Quick Capture // ZenSpace
-            </span>
+            <h3 className="font-serif font-medium text-base text-ink-primary-light dark:text-ink-primary-dark">
+              Quick Capture
+            </h3>
             <button
               onClick={onClose}
-              className="p-1 rounded text-ink-muted-light dark:text-ink-muted-dark hover:text-ink-primary-light dark:hover:text-ink-primary-dark"
+              className="p-1 rounded-md text-ink-muted-light dark:text-ink-muted-dark hover:text-ink-primary-light dark:hover:text-ink-primary-dark transition"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-1 bg-surface-subtle-light dark:bg-surface-subtle-dark p-1 rounded-md font-mono text-xs">
+          <div className="grid grid-cols-3 gap-1 bg-surface-muted-light dark:bg-surface-muted-dark p-1 rounded-lg text-xs font-medium">
             <button
               type="button"
               onClick={() => { setActiveTab('task'); setError(''); }}
-              className={`py-1 rounded font-medium transition ${
+              className={`py-1.5 rounded-md transition ${
                 activeTab === 'task'
-                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
-                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
+                  ? 'bg-surface-light dark:bg-surface-dark text-brand dark:text-brand-dark font-semibold shadow-xs'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark hover:text-ink-primary-light'
               }`}
             >
-              [Task]
+              Task
             </button>
             <button
               type="button"
               onClick={() => { setActiveTab('event'); setError(''); }}
-              className={`py-1 rounded font-medium transition ${
+              className={`py-1.5 rounded-md transition ${
                 activeTab === 'event'
-                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
-                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
+                  ? 'bg-surface-light dark:bg-surface-dark text-brand dark:text-brand-dark font-semibold shadow-xs'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark hover:text-ink-primary-light'
               }`}
             >
-              [Event]
+              Calendar Event
             </button>
             <button
               type="button"
               onClick={() => { setActiveTab('note'); setError(''); }}
-              className={`py-1 rounded font-medium transition ${
+              className={`py-1.5 rounded-md transition ${
                 activeTab === 'note'
-                  ? 'bg-surface-light dark:bg-surface-dark text-ink-primary-light dark:text-ink-primary-dark shadow-tactile font-bold'
-                  : 'text-ink-secondary-light dark:text-ink-secondary-dark'
+                  ? 'bg-surface-light dark:bg-surface-dark text-brand dark:text-brand-dark font-semibold shadow-xs'
+                  : 'text-ink-secondary-light dark:text-ink-secondary-dark hover:text-ink-primary-light'
               }`}
             >
-              [Note]
+              Notebook
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="mx-5 mt-3 p-2.5 rounded bg-vermilion-bg dark:bg-vermilion-bg-dark border border-vermilion/30 text-vermilion dark:text-vermilion-dark text-xs font-mono">
+          <div className="mx-5 mt-3 p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-xs">
             {error}
           </div>
         )}
 
         {/* Task Form */}
         {activeTab === 'task' && (
-          <form onSubmit={handleTaskSubmit} className="p-5 space-y-3">
+          <form onSubmit={handleTaskSubmit} className="p-5 space-y-3.5">
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
-                Title *
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                Task Title *
               </label>
               <input
                 type="text"
@@ -176,13 +200,13 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="e.g. Submit CSE 324 Lab Report 04"
                 value={taskForm.title}
                 onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-ink-primary-light outline-none transition"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark focus:border-brand dark:focus:border-brand-dark outline-none transition"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Due Date *
                 </label>
                 <input
@@ -190,28 +214,28 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                   required
                   value={taskForm.dueDate}
                   onChange={(e) => setTaskForm({ ...taskForm, dueDate: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Priority Level *
                 </label>
                 <select
                   value={taskForm.priority}
                   onChange={(e) => setTaskForm({ ...taskForm, priority: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none font-medium"
                 >
-                  <option value="High">HIGH [CRITICAL]</option>
-                  <option value="Medium">MEDIUM [STANDARD]</option>
-                  <option value="Low">LOW [BACKLOG]</option>
+                  <option value="High">High Priority</option>
+                  <option value="Medium">Medium Priority</option>
+                  <option value="Low">Low Priority</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Course Code
               </label>
               <input
@@ -219,37 +243,37 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="CSE 324"
                 value={taskForm.courseCode}
                 onChange={(e) => setTaskForm({ ...taskForm, courseCode: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Description (Optional)
               </label>
               <textarea
                 rows={2}
-                placeholder="Key requirements or links..."
+                placeholder="Key requirements, rubric notes, or instructions..."
                 value={taskForm.description}
                 onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
               />
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-border-subtle-light dark:border-border-subtle-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
+                className="px-3 py-1.5 text-xs text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-muted-light dark:hover:bg-surface-muted-dark rounded-md transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-medium rounded-lg bg-brand hover:bg-brand-light dark:bg-brand-dark dark:hover:bg-brand-dark/90 text-white dark:text-ink-primary-light shadow-xs transition active:scale-95 disabled:opacity-50"
               >
-                {loading ? 'Committing...' : 'Commit to Schedule'}
+                {loading ? 'Adding...' : 'Create Task'}
               </button>
             </div>
           </form>
@@ -257,9 +281,9 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
 
         {/* Event Form */}
         {activeTab === 'event' && (
-          <form onSubmit={handleEventSubmit} className="p-5 space-y-3">
+          <form onSubmit={handleEventSubmit} className="p-5 space-y-3.5">
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Event Title *
               </label>
               <input
@@ -268,13 +292,13 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="e.g. CSE 324 Web Tech Sessional Lab"
                 value={eventForm.title}
                 onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Date *
                 </label>
                 <input
@@ -282,18 +306,18 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                   required
                   value={eventForm.date}
                   onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Category *
                 </label>
                 <select
                   value={eventForm.category}
                   onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none font-medium"
                 >
                   <option value="Lecture">Lecture</option>
                   <option value="Lab">Lab Sessional</option>
@@ -306,32 +330,32 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   Start Time
                 </label>
                 <input
                   type="time"
                   value={eventForm.startTime}
                   onChange={(e) => setEventForm({ ...eventForm, startTime: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+                <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                   End Time
                 </label>
                 <input
                   type="time"
                   value={eventForm.endTime}
                   onChange={(e) => setEventForm({ ...eventForm, endTime: e.target.value })}
-                  className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                  className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Room / Venue
               </label>
               <input
@@ -339,22 +363,22 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="Lab Room 302, Academic Building"
                 value={eventForm.location}
                 onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-border-subtle-light dark:border-border-subtle-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
+                className="px-3 py-1.5 text-xs text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-muted-light dark:hover:bg-surface-muted-dark rounded-md transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-medium rounded-lg bg-brand hover:bg-brand-light dark:bg-brand-dark dark:hover:bg-brand-dark/90 text-white dark:text-ink-primary-light shadow-xs transition active:scale-95 disabled:opacity-50"
               >
                 {loading ? 'Scheduling...' : 'Schedule Event'}
               </button>
@@ -364,9 +388,9 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
 
         {/* Note Form */}
         {activeTab === 'note' && (
-          <form onSubmit={handleNoteSubmit} className="p-5 space-y-3">
+          <form onSubmit={handleNoteSubmit} className="p-5 space-y-3.5">
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Note Title *
               </label>
               <input
@@ -375,25 +399,25 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="e.g. Normalization Rules Cheatsheet"
                 value={noteForm.title}
                 onChange={(e) => setNoteForm({ ...noteForm, title: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Tags (comma separated)
               </label>
               <input
                 type="text"
-                placeholder="CSE324, WebTech"
+                placeholder="CSE324, WebTech, Database"
                 value={noteForm.tags}
                 onChange={(e) => setNoteForm({ ...noteForm, tags: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
+              <label className="block text-[11px] font-medium text-ink-secondary-light dark:text-ink-secondary-dark mb-1">
                 Content (Markdown supported)
               </label>
               <textarea
@@ -401,22 +425,22 @@ export default function QuickAddModal({ isOpen, onClose, onCreated, initialTab =
                 placeholder="Write notes, formulas, or code snippets..."
                 value={noteForm.content}
                 onChange={(e) => setNoteForm({ ...noteForm, content: e.target.value })}
-                className="w-full px-3 py-1.5 text-xs font-mono rounded border border-hairline-light dark:border-hairline-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
+                className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-border-subtle-light dark:border-border-subtle-dark bg-canvas-light dark:bg-canvas-dark text-ink-primary-light dark:text-ink-primary-dark outline-none resize-none"
               />
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-2 border-t border-hairline-light dark:border-hairline-dark">
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-border-subtle-light dark:border-border-subtle-dark">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1.5 text-xs font-mono text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark rounded"
+                className="px-3 py-1.5 text-xs text-ink-secondary-light dark:text-ink-secondary-dark hover:bg-surface-muted-light dark:hover:bg-surface-muted-dark rounded-md transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-1.5 text-xs font-mono font-semibold rounded bg-ink-primary-light text-canvas-light dark:bg-ink-primary-dark dark:text-canvas-dark hover:opacity-90 shadow-tactile transition active:scale-95 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-medium rounded-lg bg-brand hover:bg-brand-light dark:bg-brand-dark dark:hover:bg-brand-dark/90 text-white dark:text-ink-primary-light shadow-xs transition active:scale-95 disabled:opacity-50"
               >
                 {loading ? 'Saving...' : 'Save Note'}
               </button>

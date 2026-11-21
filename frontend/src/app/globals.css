@@ -4,21 +4,23 @@
 
 @layer base {
   :root {
-    --bg-canvas: #fbfbfb;
+    --bg-canvas: #f5f7f4;
     --bg-surface: #ffffff;
-    --border-subtle: #eaebed;
-    --text-primary: #131518;
-    --text-secondary: #5e636e;
-    --text-muted: #9da2af;
+    --border-subtle: #e1e7e0;
+    --text-primary: #131915;
+    --text-secondary: #47564d;
+    --text-muted: #7e9085;
+    --brand-accent: #295435;
   }
 
   .dark {
-    --bg-canvas: #0c0d0f;
-    --bg-surface: #14161a;
-    --border-subtle: #22252c;
-    --text-primary: #f1f2f4;
-    --text-secondary: #8b909d;
-    --text-muted: #585c67;
+    --bg-canvas: #0c100e;
+    --bg-surface: #131916;
+    --border-subtle: #1f2823;
+    --text-primary: #eef3ef;
+    --text-secondary: #93a398;
+    --text-muted: #586b60;
+    --brand-accent: #52a472;
   }
 
   body {
@@ -30,7 +32,7 @@
   }
 }
 
-/* Subtle, quiet scrollbar */
+/* Quiet, subtle scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -41,16 +43,20 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dcdfe4;
+  background: #cbd6cb;
   border-radius: 9999px;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #272a33;
+  background: #233027;
 }
 
-/* Minimal outline */
+/* Subtle organic outline */
 *:focus-visible {
-  outline: 1.5px solid #2563eb;
+  outline: 1.5px solid #295435;
   outline-offset: 1px;
+}
+
+.dark *:focus-visible {
+  outline: 1.5px solid #52a472;
 }
