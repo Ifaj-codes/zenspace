@@ -1,0 +1,182 @@
+{
+  "users": [
+    {
+      "_id": "664f1a2b3c4d5e6f7a8b9c01",
+      "name": "Nesar Uddin Ifag",
+      "email": "student@baiust.edu.bd",
+      "passwordHash": "$2a$10$i8Zqtv/O0iCIOho633fvIOGITPqzEtGfSJg2IutLZ8B3pafbZTEK6",
+      "studentId": "1119004",
+      "department": "CSE",
+      "avatarUrl": "",
+      "createdAt": "2026-11-21T17:20:11.316Z"
+    }
+  ],
+  "tasks": [
+    {
+      "_id": "6b01d2cbf6ba2894f5854951",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Submit CSE 324 Lab Report 04 (Web Tech)",
+      "description": "Prepare complete technical documentation with system architecture, ER diagrams, and REST API testing logs.",
+      "priority": "High",
+      "dueDate": "2026-11-22",
+      "status": "pending",
+      "courseCode": "CSE 324",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854952",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Revise Normalization & BCNF for Midterm",
+      "description": "Complete 3NF and BCNF decomposition practice problems from Korth Chapter 7.",
+      "priority": "High",
+      "dueDate": "2026-11-24",
+      "status": "pending",
+      "courseCode": "CSE 322",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854953",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Network Socket Programming Assignment",
+      "description": "Implement multi-client TCP echo server in Python with error handling.",
+      "priority": "Medium",
+      "dueDate": "2026-11-26",
+      "status": "pending",
+      "courseCode": "CSE 323",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854954",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Setup ZenSpace MongoDB Atlas Database Cluster",
+      "description": "Configure network access whitelist and copy connection string to backend .env.",
+      "priority": "Low",
+      "dueDate": "2026-11-20",
+      "status": "completed",
+      "courseCode": "CSE 324",
+      "createdAt": "2026-11-21T17:20:11.317Z",
+      "completedAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854955",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Prepare Presentation Slides for Yeakob Ali Sir",
+      "description": "Design 10 clean slides highlighting three-tier architecture and task-calendar sync.",
+      "priority": "Medium",
+      "dueDate": "2026-11-28",
+      "status": "pending",
+      "courseCode": "CSE 324",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    }
+  ],
+  "events": [
+    {
+      "_id": "6b01d2cbf6ba2894f5854956",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "CSE 324 Web Technologies Sessional Lab",
+      "description": "Lab evaluation on Next.js frontend, Express backend, and MongoDB CRUD operations.",
+      "date": "2026-11-21",
+      "startTime": "10:00",
+      "endTime": "13:00",
+      "category": "Lab",
+      "location": "Lab Room 302, Academic Building",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854957",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "CSE 321 Operating Systems Midterm Exam",
+      "description": "Covers CPU scheduling algorithms, semaphore synchronization, and deadlock prevention.",
+      "date": "2026-11-24",
+      "startTime": "09:30",
+      "endTime": "11:30",
+      "category": "Exam",
+      "location": "Auditorium Hall B",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854958",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "CSE 323 Computer Networks Lecture",
+      "description": "Subnetting, CIDR notation, and Distance Vector Routing protocols.",
+      "date": "2026-11-23",
+      "startTime": "11:30",
+      "endTime": "13:00",
+      "category": "Lecture",
+      "location": "Room 405",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f5854959",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Web Tech Term Project Prototype Demo",
+      "description": "Project demonstration of ZenSpace unified dashboard to course instructor.",
+      "date": "2026-11-26",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "category": "Assignment",
+      "location": "Faculty Office, Dept of CSE",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f585495a",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Weekend Gym & Badminton Match",
+      "description": "Relaxation and physical activity after intensive coding sprints.",
+      "date": "2026-11-27",
+      "startTime": "16:30",
+      "endTime": "18:00",
+      "category": "Personal",
+      "location": "University Gymnasium",
+      "createdAt": "2026-11-21T17:20:11.317Z"
+    }
+  ],
+  "notes": [
+    {
+      "_id": "6b01d2cbf6ba2894f585495b",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "RESTful API Design & HTTP Status Codes",
+      "content": "### HTTP Status Code Guidelines for ZenSpace API\n\n- **200 OK**: Successful GET, PUT, or PATCH request.\n- **201 Created**: Resource successfully created via POST.\n- **400 Bad Request**: Validation failure (e.g., missing title or due date).\n- **401 Unauthorized**: Missing or expired JWT bearer token.\n- **403 Forbidden**: Token valid but user not authorized for resource.\n- **404 Not Found**: Entity does not exist for the current user.\n- **500 Internal Server Error**: Uncaught exception on the Express server.\n\n> Note: Always return JSON objects with `success: boolean` and detailed message.",
+      "tags": [
+        "CSE324",
+        "WebTech",
+        "API",
+        "REST"
+      ],
+      "isPinned": true,
+      "color": "indigo",
+      "createdAt": "2026-11-21T17:20:11.317Z",
+      "updatedAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f585495c",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Database Normalization Quick Cheatsheet",
+      "content": "### Normal Forms Summary\n\n1. **1NF**: Atomic values only, no repeating groups.\n2. **2NF**: In 1NF + no partial dependency (non-prime attributes fully dependent on candidate key).\n3. **3NF**: In 2NF + no transitive dependency (X -> Y, where Y is non-prime attribute and X is not superkey).\n4. **BCNF**: For every functional dependency X -> Y, X must be a superkey.\n\n*Important for CSE 322 Midterm exam revision!*",
+      "tags": [
+        "CSE322",
+        "Database",
+        "Exams"
+      ],
+      "isPinned": true,
+      "color": "emerald",
+      "createdAt": "2026-11-21T17:20:11.317Z",
+      "updatedAt": "2026-11-21T17:20:11.317Z"
+    },
+    {
+      "_id": "6b01d2cbf6ba2894f585495d",
+      "userId": "664f1a2b3c4d5e6f7a8b9c01",
+      "title": "Three-Tier Architecture Benefits for ZenSpace",
+      "content": "### Key Academic Defense Points\n\n- **Presentation Tier**: Next.js 14 / React provides modular UI components, instant responsiveness, and client-side caching.\n- **Application Tier**: Express.js server handles authentication, validation, and task-to-calendar deadline synchronization.\n- **Data Tier**: MongoDB Atlas manages document storage with flexible schemas and indexed queries via Mongoose.",
+      "tags": [
+        "Project",
+        "Architecture",
+        "CSE324"
+      ],
+      "isPinned": false,
+      "color": "amber",
+      "createdAt": "2026-11-21T17:20:11.317Z",
+      "updatedAt": "2026-11-21T17:20:11.317Z"
+    }
+  ]
+}
