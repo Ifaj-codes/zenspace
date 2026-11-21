@@ -10,82 +10,73 @@ module.exports = {
     extend: {
       colors: {
         canvas: {
-          light: '#fbfaf8',
-          dark: '#0c0d10',
+          light: '#fbfbfb',
+          dark: '#0c0d0f',
         },
         surface: {
           light: '#ffffff',
-          'subtle-light': '#f3f2ee',
-          dark: '#131519',
-          'subtle-dark': '#191b22',
+          dark: '#14161a',
+          muted: {
+            light: '#f4f5f7',
+            dark: '#1a1d23',
+          },
         },
-        hairline: {
-          light: '#e6e4dc',
-          'strong-light': '#d2cfc4',
-          dark: '#23262d',
-          'strong-dark': '#323640',
+        border: {
+          subtle: {
+            light: '#eaebed',
+            dark: '#22252c',
+          },
+          strong: {
+            light: '#d2d5dc',
+            dark: '#30343f',
+          },
         },
         ink: {
           primary: {
-            light: '#111215',
-            dark: '#f3f4f6',
+            light: '#131518',
+            dark: '#f1f2f4',
           },
           secondary: {
-            light: '#616571',
-            dark: '#8b8f9a',
+            light: '#5e636e',
+            dark: '#8b909d',
           },
           muted: {
-            light: '#9da0ab',
+            light: '#9da2af',
             dark: '#585c67',
           },
         },
-        vermilion: {
-          DEFAULT: '#e5484d',
-          dark: '#ff6369',
-          bg: '#fdf2f2',
-          'bg-dark': '#291415',
-        },
-        cobalt: {
+        brand: {
           DEFAULT: '#2563eb',
-          dark: '#60a5fa',
-          bg: '#eff6ff',
-          'bg-dark': '#111e38',
+          dark: '#3b82f6',
         },
-        pine: {
-          DEFAULT: '#059669',
-          dark: '#34d399',
-          bg: '#ecfdf5',
-          'bg-dark': '#0d281e',
-        },
-        ochre: {
-          DEFAULT: '#d97706',
-          dark: '#fbbf24',
-          bg: '#fffbeb',
-          'bg-dark': '#2b1f09',
+        priority: {
+          high: '#e11d48',
+          medium: '#d97706',
+          low: '#10b981',
         },
       },
       fontFamily: {
         sans: [
-          'Plus Jakarta Sans',
+          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           'Segoe UI',
           'Roboto',
           'sans-serif',
         ],
+        serif: [
+          'Newsreader',
+          'Georgia',
+          'Cambria',
+          'serif',
+        ],
         mono: [
           'JetBrains Mono',
           'ui-monospace',
           'SFMono-Regular',
           'Menlo',
-          'Monaco',
-          'Consolas',
           'monospace',
         ],
-      },
-      boxShadow: {
-        tactile: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'tactile-hover': '0 2px 5px -1px rgba(0, 0, 0, 0.08), 0 1px 3px -1px rgba(0, 0, 0, 0.06)',
       },
     },
   },
